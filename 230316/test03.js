@@ -1,3 +1,4 @@
+//os 모듈
 let os = require('os');
 console.log('시스템의 hostname : %s', os.hostname);
 console.log('시스템의 메모리 : %d/%d', os.freemem(),os.totalmem());
