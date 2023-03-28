@@ -19,6 +19,10 @@ for(const fruit of products){
 console.log('\n');
 
 //for문으로 출력
+products.forEach(element => {
+    console.log(element.name,'\t',element.price);
+});
+
 for(let i=0; i<products.length; i++){
     const element = products[i];
     console.log(element);
