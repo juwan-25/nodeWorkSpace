@@ -14,7 +14,7 @@ app.get('/', (req, res)=>{
     
 });
 
-//로그인 들어오면 실행
+//학생 정보 들어오면 실행
 app.post('/student', (req, res)=>{
     console.log(req.body);
     console.log(req.body.grade);
