@@ -20,6 +20,15 @@ app.get('/', (req,res) => {
     res.render('list', {datalist: todosArr});
 })
 
+app.get('/insert', (req,res) => {
+    console.log('/ insert get이 시작');
+})
+
+app.get('/delete:id', (req,res) => {
+    console.log('/ delete get이 시작'+id);
+    res.redirect('/');
+})
+
 app.listen(3000, () => {
     console.log('http://localhost:3000/');
 })
