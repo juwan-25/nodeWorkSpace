@@ -22,12 +22,20 @@ app.get('/', (req,res) => {
 
 app.get('/insert', (req,res) => {
     console.log('/ insert get이 시작');
+    res.render('insert');
 })
 
-app.get('/delete:id', (req,res) => {
-    console.log('/ delete get이 시작'+id);
-    res.redirect('/');
+app.post('/insert', (req,res) => {
+    todosArr.push({contents:req.body.contents, yesno:req.body.yesno});
 })
+
+app.get('/delete/:id', (req,res) => {
+    console.log(`/ delete get이 시작 ${res.id}`);
+
+    todosArr.splice(res.id,1);
+    console.log(`delete id : ${res.id}`)
+    res.redirect('/');
+});
 
 app.listen(3000, () => {
     console.log('http://localhost:3000/');
