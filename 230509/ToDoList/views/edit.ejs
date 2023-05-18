@@ -7,19 +7,23 @@
     <title>Insert</title>
 </head>
 <body>
-    <h1>할 일 추가 입력</h1>
+    <h1>할 일 수정</h1>
     <hr>
-    <form medthod="post" action="insert">
+    <form medthod="post">
         <fieldset>
-            <legend>Insert Data</legend>
+            <legend>Edit Data</legend>
             <table>
                 <tr>
+                    <td><label>ID</label></td>
+                    <td><input type="text" name="id" value="<%= data.id %>" disabled/></td>
+                </tr>
+                <tr>
                     <td><label>할 일</label></td>
-                    <td><input type="text" name="contents"/></td>
+                    <td><input type="text" name="contents" value="<%= data.contents %> " disabled/></td>
                 </tr>
                 <tr>
                     <td><label>완료 여부</label></td>
-                    <td><input type="text" name="yesno"/></td>
+                    <td><input type="text" name="yesno"  value="<%= data.yesno %>"/></td>
                 </tr>
             </table>
             <input type="submit"/>

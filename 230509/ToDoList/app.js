@@ -1,43 +1,83 @@
 const express = require('express');
 const ejs = require('ejs');
+const path = require('path');
+const mysql = require('mysql');
 const app = express();
 
-app.use(express.static('public'));
-app.use(express.urlencoded({extended:false}));
-app.set('view engine', 'ejs');
-app.set('views', './views');
-
-let todosArr = [
-    {id:1, content:"하하하하", yesno:"yes"},
-    {id:2, content:"하하하하하하하하", yesno:"no"},
-    {id:3, content:"하하하하", yesno:"no"},
-    {id:4, content:"하하하하하하하하", yesno:"yes"},
+let todoArr = [
+    { id: 1, contents: '영화 보기', yesno: 'no' },
+    { id: 2, contents: '숙제 하기', yesno: 'no' },
+    { id: 3, contents: '운동 하기', yesno: 'no' },
+    { id: 4, contents: '노래 듣기', yesno: 'no' }
 ];
 
+let count = 5;
 
-app.get('/', (req,res) => {
-    console.log('/ get이 시작');
-    res.render('list', {datalist: todosArr});
-})
+app.use(express.static('public'));  // pulbic 폴더 공유
+app.use(express.urlencoded({ extended: false }));  // 사용자 html 입력
+app.set('views', path.join(__dirname, 'views'));    // 뷰 폴더
+app.set('view engine', 'ejs');
 
-app.get('/insert', (req,res) => {
-    console.log('/ insert get이 시작');
-    res.render('insert');
-})
-
-app.post('/insert', (req,res) => {
-    todosArr.push({contents:req.body.contents, yesno:req.body.yesno});
-})
-
-app.get('/delete/:id', (req,res) => {
-    console.log(`/ delete get이 시작 ${res.id}`);
-
-    todosArr.splice(res.id,1);
-    console.log(`delete id : ${res.id}`)
-    res.redirect('/');
+app.get('/', (req, res) => {
+    console.log('/ get이 시작됨~~');
+    res.render('list', { datalist: todoArr });   // list.ejs 화면에 출력
 });
 
-app.listen(3000, () => {
-    console.log('http://localhost:3000/');
+app.get('/insert', (req, res) => {
+    console.log("/insert get 시작됨~");
+    res.render('insert');
+});
+
+app.post('/insert', (req, res) => {
+    console.log("/insert post 시작됨~");
+    let id_num = count++;
+    todoArr.push({id:id_num, contents:req.body.contents, yesno: req.body.yesno});
+    res.redirect("/");
+});
+
+app.get('/delete/:id', (req, res) => {
+    console.log("/delete " + res.id);
+    for(const i in todoArr) {
+        if(todoArr[i].id == req.params.id) {
+            console.log(todoArr[i].id + " " + i);
+            todoArr.splice(i, 1);
+        }
+    }
+    console.log("delete ok~~~ " + todoArr);
+    res.redirect("/");
+});
+
+app.get('/edit/:id', (req, res) => {
+    let editdata = [];
+    console.log("/edit " + req.params.id);
+    for(const i in todoArr) {
+        if(todoArr[i].id == req.params.id) {
+            console.log(todoArr[i].id + " " + i);
+            editdata = todoArr[i];
+            res.render('edit', {data: editdata}); //edit.ejs
+        }
+    }
 })
 
+app.post('/edit/:id',(req, res) => {
+    let editdata = [];
+    console.log("/edit " + req.params.id);
+    if(req.body.contents && req.body.yesno) {
+        console.log("수정 값 " + req.body.contents + " " + req.body.yesno);
+    }
+
+    //추가
+    for (const i in todoArr) {
+        if(todoArr[i].id == req.params.id) {
+            todoArr.splice(i, 1, {id:req.params.id, contents:req.body.contents, yesno:req.body.yesno});
+            console.log("수정 ok" + req.params.id);
+        }
+    }
+    res.redirect("/");
+
+
+})
+
+app.listen(3000, () => {
+    console.log("http://localhost:3000/");
+});
