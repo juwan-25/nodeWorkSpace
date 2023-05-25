@@ -27,8 +27,8 @@ app.post('/', (req, res) => {
     if (id && password) {
         dbconn.query('select * from userTbl where id = ? and password = ?', 
             [id, password], 
-            (error, results) => {
-                if (error) throw error;
+            (err, results) => {
+                if(err) console.log('db select error' + err);
                 if (results.length > 0) {
                     res.send('<script type="text/javascript">alert("로그인 성공!"); document.location.href="/list";</script>');
                 } else {              
@@ -54,14 +54,13 @@ app.get('/list', (req, res) => {
 
 
 app.get('/logout', (req, res) => {
-    req.session.loggedin = false;
-    req.send('<script type="text/javascript">alert("성공적으로 로그아웃 되었습니다."); document.location.href="/";</script>');    
+    res.send('<script type="text/javascript">alert("성공적으로 로그아웃 되었습니다."); document.location.href="/";</script>');    
 });
 
 app.get('/insert', (req, res) => {
     console.log('insert get');
     res.render('insert'); 
-})
+});
 
 app.post('/insert', (req, res) => {
     console.log('insert post');
@@ -75,14 +74,56 @@ app.post('/insert', (req, res) => {
         }
         res.redirect('/result');
     })
-})
+});
 
 app.get('/result', (req, res) => {
     console.log('insert success');
     res.render('result'); 
+});
+
+app.get('/delete/:id', (req, res) => {
+    dbconn.query('delete from userTbl where id = ?', [req.params.id], (err, results) => {
+        if(err) {
+            console.log('db delete error' + err);
+        } else {
+            console.log(`delete ok ${req.params.id}`);
+        }
+        res.redirect('/list');
+    })
+});
+
+
+app.get('/edit/:id', (req, res) => {
+    console.log('edit get');
+    dbconn.query('select * from userTbl where id = ?', 
+        [req.params.id],
+        (err, results) => {
+            if(err) {
+                console.log('db select error' + err);
+            } else {
+                console.log(results);
+                res.render('edit', {data:results[0]});
+            }
+    });
+
+})
+
+app.post('/edit/:id', (req, res) => {
+    console.log('edit post');
+    dbconn.query('update userTbl set name  = ?, tel = ?, email = ? where id = ?', 
+        [req.body.name, req.body.tel, req.body.email, req.params.id], 
+        (err, results) => {
+        if(err) {
+            console.log('db update error' + err);
+        } else {
+            console.log(`edit ok ${req.params.id}`);
+            res.redirect('/list');
+        }
+
+    })
 })
 
 app.listen(3000, () => {
     console.log('http://localhost:3000/');
-})
+});
 
