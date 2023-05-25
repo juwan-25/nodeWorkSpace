@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+</head>
+<body>
+    <h1>간단한 TODO 리스트</h1>
+    <a href="/insert">
+        <button type="button">추가</button>
+    </a>
+    <table width="90%" border="1">
+        <tr>
+            <th>ID</th>
+            <th>PassWord</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>이메일</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        <% datalist.forEach(function (item, index) { %>
+            <tr>
+                <td><%= item.id %></td>
+                <td><%= item.password %></td>
+                <td><%= item.name %></td>
+                <td><%= item.tel %></td>
+                <td><%= item.email %></td>
+                <td>   
+                    <a href="/edit/<%= item.id %>">
+                        <button type="button">수정</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="/delete/<%= item.id %>">
+                        <button type="button">삭제</button>
+                    </a>
+                </td>
+            </tr>
+        <% }); %>
+    </table>
+    <a href="/logout">
+        <button type="button">로그아웃</button>
+    </a>
+</body>
+</html>
