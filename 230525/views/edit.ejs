@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+</head>
+<body>
+    <h1>사용자 수정</h1>
+    <hr>
+    <form method="post">
+        <fieldset>
+            <legend>Edit User</legend>
+            <table>
+                <tr>
+                    <td><label>ID</label></td>
+                    <td><input type="text" name="id" value="<%= data.id %>" disabled/></td>
+                </tr>
+                <tr>
+                    <td><label>password</label></td>
+                    <td><input type="text" name="password" value="<%= data.password %>" disabled/></td>
+                </tr>
+                <tr>
+                    <td><label>이름</label></td>
+                    <td><input type="text" name="name" value="<%= data.name %>"/></td>
+                </tr>
+                <tr>
+                    <td><label>전화번호</label></td>
+                    <td><input type="text" name="tel" value="<%= data.tel %>"/></td>
+                </tr>
+                <tr>
+                    <td><label>이메일</label></td>
+                    <td><input type="text" name="email" value="<%= data.email %>"/></td>
+                </tr>
+            </table>
+            <br/>
+            <input type="submit"/>
+        </fieldset>
+    </form>
+</body>
+</html>

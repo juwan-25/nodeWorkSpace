@@ -7,21 +7,26 @@
     <title>Insert</title>
 </head>
 <body>
-    <h1>할 일 추가 입력</h1>
+    <h1>로그인</h1>
     <hr>
-    <form medthod="post">
+    <a href="/insert">
+        <button type="button">회원가입</button>
+    </a>
+    <br/>
+    <form method="post">
         <fieldset>
-            <legend>Insert Data</legend>
+            <legend>Login User</legend>
             <table>
                 <tr>
-                    <td><label>할 일</label></td>
-                    <td><input type="text" name="contents"/></td>
+                    <td><label>ID</label></td>
+                    <td><input type="text" name="id"/></td>
                 </tr>
                 <tr>
-                    <td><label>완료 여부</label></td>
-                    <td><input type="text" name="yesno"/></td>
+                    <td><label>password</label></td>
+                    <td><input type="password" name="password"/></td>
                 </tr>
             </table>
+            <br/>
             <input type="submit"/>
         </fieldset>
     </form> 
